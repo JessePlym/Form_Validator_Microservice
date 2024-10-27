@@ -12,12 +12,11 @@ import com.plymjesse.form_validator.service.FormProcesser;
 
 import jakarta.validation.Valid;
 
-@RestController
-@RequestMapping("/")
-public class FormController {
+import java.util.List;
 
-  // Form form = new Form(" ", "Plym", "plymjesse@gmail.com", "This is a
-  // message");
+@RestController
+@RequestMapping("/api/form")
+public class FormController {
 
   private final FormProcesser processer;
 
@@ -25,12 +24,21 @@ public class FormController {
     this.processer = processer;
   }
 
-  @PostMapping
+  @PostMapping("/submit")
   public ResponseEntity<String> home(@Valid @RequestBody Form form, BindingResult bindingResult) {
-    System.out.println(bindingResult);
     if (bindingResult.hasErrors()) {
-      return ResponseEntity.badRequest().body("Validation failed");
+      List<String> errors = processer.getErrorMessages(bindingResult);
+
+      return ResponseEntity.badRequest().body(String.join(", ", errors));
     }
-    return ResponseEntity.ok(form.toString());
+
+    String responseMsg = processer.sendForm(form);
+
+    if (!responseMsg.equals("OK")) {
+      return ResponseEntity.badRequest().body(responseMsg);
+    }
+
+    return ResponseEntity.ok(responseMsg);
+
   }
 }
