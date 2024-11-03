@@ -14,7 +14,7 @@ public class WebConfig {
   @Bean
   CorsConfigurationSource corsConfig() {
     CorsConfiguration config = new CorsConfiguration();
-    config.setAllowedOrigins(List.of("http://localhost:3000", "https://plymjesse.com"));
+    config.setAllowedOrigins(List.of("https://plymjesse.com"));
     config.setAllowedHeaders(List.of("Content-Type"));
     config.setAllowedMethods(List.of("POST"));
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
