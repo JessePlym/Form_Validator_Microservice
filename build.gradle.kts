@@ -40,4 +40,14 @@ tasks.named("build") {
     mustRunAfter("clean")
 }
 
+val copyToLib by tasks.registering(Copy::class) {
+    into("$buildDir/libs")
+    from(configurations.getByName("compileClasspath"))
+}
+
+tasks.named("stage") {
+    dependsOn(copyToLib)
+}
+
+
 
