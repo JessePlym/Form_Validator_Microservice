@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar build/libs/form-validator.jar
+web: java -Dserver.port=$PORT -jar build/libs/**.jar
